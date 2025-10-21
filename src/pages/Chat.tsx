@@ -5,11 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 let socket: Socket;
+interface Message {
+  id: number;
+  content: string;
+  sender: string;
+  // Add more properties as needed
+}
 
 export default function Chat() {
-  const [roomId, setRoomId] = useState("68f2904610e4edce88fba835"); // real workspace _id
+  const [roomId] = useState(""); // real workspace _id
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   // 🔑 Get JWT from localStorage
   const token = localStorage.getItem("token");
@@ -48,7 +54,7 @@ export default function Chat() {
     return () => {
       socket.disconnect();
     };
-  }, [roomId]);
+  }, [roomId, axiosAuth]);
 
   // ✅ Send message
   const sendMessage = async () => {
@@ -57,7 +63,7 @@ export default function Chat() {
     try {
       const res = await axiosAuth.post("/messages", {
         workspaceId: roomId,
-        receiverId: "68f2042f382236d410f303c9", // example receiver
+        receiverId: "", // example receiver
         content: message,
       });
 
@@ -85,7 +91,7 @@ export default function Chat() {
         ) : (
           messages.map((msg, i) => (
             <div key={i} className="mb-2">
-              <b>{msg.sender?.username || "User"}:</b> {msg.content || msg.message}
+              <b>{msg.sender || "User"}:</b> {msg.content || msg.sender}
             </div>
           ))
         )}
