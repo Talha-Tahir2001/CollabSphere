@@ -22,158 +22,8 @@ import {
   FileText,
   Video,
   Bell,
-  Sparkles,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import React from "react";
-
-// Fallback BorderBeam component if Magic UI version has issues
-const BorderBeam = ({ 
-  size = 200, 
-  duration = 15, 
-  delay = 0,
-  colorFrom = "from-blue-500",
-  colorTo = "to-purple-500"
-}) => {
-  return (
-    <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
-      <motion.div
-        className={cn(
-          "absolute h-20 bg-gradient-to-r",
-          colorFrom,
-          colorTo,
-          "blur-xl opacity-50"
-        )}
-        style={{
-          width: `${size}px`,
-          left: -size,
-          top: -40,
-        }}
-        animate={{
-          left: ["0%", "100%"],
-        }}
-        transition={{
-          duration,
-          delay,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-      />
-    </div>
-  );
-};
-
-// Fallback Meteors component
-const Meteors = ({ number = 20 }) => {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(number)].map((_, idx) => (
-        <motion.span
-          key={idx}
-          className="absolute h-0.5 w-0.5 rotate-[215deg] bg-gradient-to-r from-blue-500 to-purple-500"
-          style={{
-            top: Math.random() * 100 + "%",
-            left: Math.random() * 100 + "%",
-          }}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{
-            opacity: [0, 1, 0],
-            scale: [0, 1, 0],
-            x: [0, -80],
-            y: [0, 80],
-          }}
-          transition={{
-            duration: Math.random() * 2 + 2,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-          }}
-        >
-          <div className="absolute inset-0 w-16 h-0.5 bg-gradient-to-r from-blue-500/0 via-blue-500/50 to-blue-500/0" />
-        </motion.span>
-      ))}
-    </div>
-  );
-};
-
-// Fallback DotPattern component
-const DotPattern = ({ className }) => {
-  return (
-    <div className={cn("fixed inset-0", className)}>
-      <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern
-            id="dot-pattern"
-            x="0"
-            y="0"
-            width="20"
-            height="20"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="2" cy="2" r="1" className="fill-muted-foreground/20" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#dot-pattern)" />
-      </svg>
-    </div>
-  );
-};
-
-// Fallback ShimmerButton component
-const ShimmerButton = ({ children, className, ...props }) => {
-  return (
-    <Button
-      className={cn(
-        "relative overflow-hidden group",
-        className
-      )}
-      {...props}
-    >
-      <span className="relative z-10">{children}</span>
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-        initial={{ x: "-100%" }}
-        animate={{ x: "200%" }}
-        transition={{
-          repeat: Infinity,
-          duration: 2,
-          ease: "linear",
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-    </Button>
-  );
-};
-
-// Fallback SparklesText component
-const SparklesText = ({ text, className, sparklesCount = 8 }) => {
-  return (
-    <div className={cn("relative inline-block", className)}>
-      <span className="relative z-10">{text}</span>
-      {[...Array(sparklesCount)].map((_, i) => (
-        <motion.span
-          key={i}
-          className="absolute pointer-events-none"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            scale: [0, 1, 0],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: Math.random() * 2 + 1,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-          }}
-        >
-          <Sparkles className="w-4 h-4 text-yellow-400" />
-        </motion.span>
-      ))}
-    </div>
-  );
-};
 
 const Home = () => {
   const token = false; // Replace with: localStorage.getItem("token");
@@ -253,7 +103,6 @@ const Home = () => {
       content:
         "CollabSphere transformed how our team communicates. The real-time features are incredible!",
       rating: 5,
-      avatar: "SJ",
     },
     {
       name: "Michael Chen",
@@ -262,7 +111,6 @@ const Home = () => {
       content:
         "Best collaboration tool we've used. Clean interface and powerful features that actually work.",
       rating: 5,
-      avatar: "MC",
     },
     {
       name: "Emily Rodriguez",
@@ -271,7 +119,6 @@ const Home = () => {
       content:
         "Helped us scale from 5 to 50 people without missing a beat. Highly recommended!",
       rating: 5,
-      avatar: "ER",
     },
   ];
 
@@ -308,18 +155,10 @@ const Home = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center w-full relative overflow-hidden">
-      {/* Background Pattern */}
-      <DotPattern
-        className={cn(
-          "fixed inset-0 -z-10",
-          "[mask-image:radial-gradient(600px_circle_at_center,white,transparent)]"
-        )}
-      />
-
+    <div className="flex flex-col items-center w-full">
       {/* Hero Section */}
       <motion.div
-        className="flex flex-col items-center p-8 justify-center text-center space-y-8 max-w-6xl w-full min-h-[90vh] relative z-10"
+        className="flex flex-col items-center p-8 justify-center text-center space-y-8 max-w-6xl w-full min-h-[90vh]"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -330,7 +169,7 @@ const Home = () => {
           transition={{ delay: 0.2, duration: 0.5 }}
         >
           <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-            <Sparkles className="w-3 h-3 mr-2" /> Introducing CollabSphere{" "}
+            <span className="mr-2">✨</span> Introducing CollabSphere{" "}
             <ArrowRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
           </AnimatedShinyText>
         </motion.div>
@@ -340,12 +179,11 @@ const Home = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          <SparklesText 
-            text="Collaborate Without Boundaries"
-            className="text-5xl md:text-7xl font-bold leading-tight"
-            sparklesCount={10}
-          />
-          <div className="text-5xl md:text-7xl font-bold mt-2">🌐</div>
+          <AuroraText className="text-5xl md:text-7xl font-bold leading-tight">
+            Collaborate Without
+            <br />
+            Boundaries 🌐
+          </AuroraText>
         </motion.div>
 
         <motion.p
@@ -363,29 +201,28 @@ const Home = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4"
         >
           {token ? (
             <Link to="/workspaces">
-              <ShimmerButton size="lg" className="px-8 py-6 text-lg">
+              <Button size="lg" className="px-8 py-6 text-lg">
                 Go to Workspaces
                 <ArrowRight className="ml-2 w-5 h-5" />
-              </ShimmerButton>
+              </Button>
             </Link>
           ) : (
-            <>
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/auth/register">
-                <ShimmerButton size="lg" className="px-8 py-6 text-lg">
+                <Button size="lg" className="px-8 py-6 text-lg">
                   Get Started Free
                   <ArrowRight className="ml-2 w-5 h-5" />
-                </ShimmerButton>
+                </Button>
               </Link>
               <Link to="/auth/login">
                 <Button size="lg" variant="outline" className="px-8 py-6 text-lg">
                   Login
                 </Button>
               </Link>
-            </>
+            </div>
           )}
         </motion.div>
 
@@ -412,13 +249,13 @@ const Home = () => {
 
       {/* Stats Section */}
       <motion.div
-        className="w-full py-16 bg-muted/30 relative overflow-hidden"
+        className="w-full py-16 bg-muted/30"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="max-w-6xl mx-auto px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <motion.div
@@ -428,7 +265,6 @@ const Home = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                whileHover={{ scale: 1.05 }}
               >
                 <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                   {stat.number}
@@ -442,7 +278,7 @@ const Home = () => {
 
       {/* Features Section */}
       <motion.div
-        className="w-full py-20 px-8 relative"
+        className="w-full py-20 px-8"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -466,19 +302,14 @@ const Home = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
               <motion.div key={index} variants={itemVariants}>
-                <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/50 relative overflow-hidden group">
-                  <BorderBeam size={250} duration={12} delay={index * 2} />
-                  <CardHeader className="relative z-10">
-                    <motion.div 
-                      className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4"
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.6 }}
-                    >
+                <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary/50">
+                  <CardHeader>
+                    <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
                       {feature.icon}
-                    </motion.div>
+                    </div>
                     <CardTitle className="text-xl">{feature.title}</CardTitle>
                   </CardHeader>
-                  <CardContent className="relative z-10">
+                  <CardContent>
                     <p className="text-muted-foreground">{feature.description}</p>
                   </CardContent>
                 </Card>
@@ -490,13 +321,13 @@ const Home = () => {
 
       {/* Use Cases Section */}
       <motion.div
-        className="w-full py-20 px-8 bg-muted/30 relative overflow-hidden"
+        className="w-full py-20 px-8 bg-muted/30"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="max-w-6xl mx-auto relative z-10">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -521,19 +352,14 @@ const Home = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
               >
-                <Card className="h-full hover:shadow-md transition-all duration-300 text-center relative overflow-hidden">
-                  <Meteors number={15} />
-                  <CardHeader className="relative z-10">
-                    <motion.div 
-                      className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-3"
-                      whileHover={{ scale: 1.2, rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                    >
+                <Card className="h-full hover:shadow-md transition-all duration-300 text-center">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-3">
                       {useCase.icon}
-                    </motion.div>
+                    </div>
                     <CardTitle className="text-lg">{useCase.title}</CardTitle>
                   </CardHeader>
-                  <CardContent className="relative z-10">
+                  <CardContent>
                     <p className="text-muted-foreground text-sm">
                       {useCase.description}
                     </p>
@@ -578,15 +404,8 @@ const Home = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05, duration: 0.3 }}
-                whileHover={{ y: -4 }}
               >
-                <motion.div 
-                  className="text-primary"
-                  whileHover={{ scale: 1.2, rotate: 15 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {feature.icon}
-                </motion.div>
+                <div className="text-primary">{feature.icon}</div>
                 <span className="font-medium">{feature.text}</span>
               </motion.div>
             ))}
@@ -596,7 +415,7 @@ const Home = () => {
 
       {/* Testimonials Section */}
       <motion.div
-        className="w-full py-20 px-8 bg-muted/30 relative overflow-hidden"
+        className="w-full py-20 px-8 bg-muted/30"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -626,26 +445,9 @@ const Home = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                whileHover={{ y: -8 }}
               >
-                <Card className="h-full hover:shadow-lg transition-all duration-300 relative overflow-hidden">
-                  <BorderBeam size={200} duration={10} delay={index * 3} />
-                  <CardHeader className="relative z-10">
-                    <div className="flex items-center gap-3 mb-3">
-                      <motion.div 
-                        className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold"
-                        whileHover={{ scale: 1.1, rotate: 360 }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        {testimonial.avatar}
-                      </motion.div>
-                      <div className="flex-1">
-                        <div className="font-semibold">{testimonial.name}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {testimonial.role}
-                        </div>
-                      </div>
-                    </div>
+                <Card className="h-full hover:shadow-lg transition-all duration-300">
+                  <CardHeader>
                     <div className="flex gap-1 mb-3">
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <Star
@@ -658,9 +460,10 @@ const Home = () => {
                       "{testimonial.content}"
                     </p>
                   </CardHeader>
-                  <CardContent className="relative z-10">
+                  <CardContent>
+                    <div className="font-semibold">{testimonial.name}</div>
                     <div className="text-sm text-muted-foreground">
-                      {testimonial.company}
+                      {testimonial.role} at {testimonial.company}
                     </div>
                   </CardContent>
                 </Card>
@@ -672,13 +475,13 @@ const Home = () => {
 
       {/* CTA Section */}
       <motion.div
-        className="w-full py-24 px-8 relative overflow-hidden"
+        className="w-full py-24 px-8"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="max-w-4xl mx-auto text-center relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -699,10 +502,10 @@ const Home = () => {
             {!token && (
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/auth/register">
-                  <ShimmerButton size="lg" className="px-10 py-6 text-lg">
+                  <Button size="lg" className="px-10 py-6 text-lg">
                     Start Free Trial
                     <Rocket className="ml-2 w-5 h-5" />
-                  </ShimmerButton>
+                  </Button>
                 </Link>
                 <Button size="lg" variant="outline" className="px-10 py-6 text-lg">
                   Schedule Demo
