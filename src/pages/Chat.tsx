@@ -22,7 +22,7 @@ export default function Chat() {
 
   // 🧠 Axios instance with Authorization header
   const axiosAuth = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: `import.meta.env.VITE_BASE_URL${'/'}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -30,7 +30,7 @@ export default function Chat() {
 
   useEffect(() => {
     // Connect to Socket.IO server
-    socket = io("http://localhost:5000", { transports: ["websocket"] });
+    socket = io(`import.meta.env.VITE_BASE_URL${'/'}`, { transports: ["websocket"] });
 
     // Join workspace room
     socket.emit("joinRoom", roomId);
