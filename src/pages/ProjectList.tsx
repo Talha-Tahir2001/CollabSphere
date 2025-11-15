@@ -107,7 +107,7 @@ export default function ProjectList() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 cursor-pointer">
               <FolderPlus size={18} /> New Project
             </Button>
           </DialogTrigger>
@@ -128,7 +128,7 @@ export default function ProjectList() {
                 onChange={(e) => setDescription(e.target.value)}
                 disabled={loading}
               />
-              <Button onClick={handleCreateProject} disabled={loading}>
+              <Button className="cursor-pointer" onClick={handleCreateProject} disabled={loading}>
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -150,7 +150,7 @@ export default function ProjectList() {
             <p className="text-muted-foreground mb-4">
               No projects found. Create your first project!
             </p>
-            <Button onClick={() => setOpen(true)} variant="outline">
+            <Button className="cursor-pointer" onClick={() => setOpen(true)} variant="outline">
               <FolderPlus size={18} className="mr-2" />
               Create Project
             </Button>

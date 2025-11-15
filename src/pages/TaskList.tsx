@@ -169,7 +169,7 @@ export default function TaskList() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 cursor-pointer">
               <Plus size={18} /> New Task
             </Button>
           </DialogTrigger>
@@ -206,7 +206,7 @@ export default function TaskList() {
                 onChange={(e) => setDueDate(e.target.value)}
                 disabled={loading}
               />
-              <Button onClick={handleCreateTask} disabled={loading}>
+              <Button className="cursor-pointer" onClick={handleCreateTask} disabled={loading}>
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -227,7 +227,7 @@ export default function TaskList() {
             <p className="text-muted-foreground mb-4">
               No tasks found. Create your first task!
             </p>
-            <Button onClick={() => setOpen(true)} variant="outline">
+            <Button className="cursor-pointer" onClick={() => setOpen(true)} variant="outline">
               <Plus size={18} className="mr-2" />
               Create Task
             </Button>
@@ -256,7 +256,7 @@ export default function TaskList() {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleDeleteTask(task._id)}
-                    className="text-destructive hover:text-destructive"
+                    className="text-destructive hover:text-destructive cursor-pointer"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

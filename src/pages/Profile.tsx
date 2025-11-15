@@ -134,7 +134,7 @@ const Profile = () => {
               </div>
             </div>
 
-            <Button onClick={handleUpdate} className="w-full">
+            <Button onClick={handleUpdate} className="w-full cursor-pointer">
               Update Profile
             </Button>
           </CardContent>

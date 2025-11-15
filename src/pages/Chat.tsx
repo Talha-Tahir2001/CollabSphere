@@ -105,7 +105,7 @@ export default function Chat() {
           placeholder="Type message..."
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
-        <Button onClick={sendMessage}>Send</Button>
+        <Button className="cursor-pointer" onClick={sendMessage}>Send</Button>
       </div>
     </div>
   );

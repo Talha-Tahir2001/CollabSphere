@@ -77,7 +77,7 @@ export default function WorkspaceList() {
         <h1 className="text-2xl font-bold">Your Workspaces</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 cursor-pointer">
               <FolderPlus size={18} /> New Workspace
             </Button>
           </DialogTrigger>
@@ -96,7 +96,7 @@ export default function WorkspaceList() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <Button onClick={handleCreate}>Create</Button>
+              <Button className="cursor-pointer" onClick={handleCreate}>Create</Button>
             </div>
           </DialogContent>
         </Dialog>

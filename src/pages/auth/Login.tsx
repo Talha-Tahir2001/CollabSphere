@@ -42,7 +42,7 @@ export default function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button className="w-full" onClick={handleLogin}>
+        <Button className="w-full cursor-pointer" onClick={handleLogin}>
           Login
         </Button>
       </div>

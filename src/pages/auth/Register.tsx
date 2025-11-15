@@ -50,7 +50,7 @@ export default function Register() {
           </SelectContent>
         </Select>
 
-        <Button onClick={handleRegister}>Register</Button>
+        <Button className="cursor-pointer" onClick={handleRegister}>Register</Button>
       </div>
       <p className="mt-4 text-center text-sm text-muted-foreground">
         Already have an account?{" "}

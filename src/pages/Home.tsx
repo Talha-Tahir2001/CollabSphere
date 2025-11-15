@@ -59,19 +59,19 @@ export default function Home() {
 
         {token ? (
           <Link to="/workspaces">
-            <Button size="lg" className="px-8 py-6 text-lg">
+            <Button size="lg" className="px-8 py-6 text-lg cursor-pointer">
               Go to Workspaces <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>
         ) : (
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/auth/register">
-              <Button size="lg" className="px-8 py-6 text-lg">
+              <Button size="lg" className="px-8 py-6 text-lg cursor-pointer">
                 Get Started <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
             <Link to="/auth/login">
-              <Button size="lg" variant="outline" className="px-8 py-6 text-lg">
+              <Button size="lg" variant="outline" className="px-8 py-6 text-lg cursor-pointer">
                 Log In
               </Button>
             </Link>
@@ -125,7 +125,7 @@ export default function Home() {
           Start collaborating with your team today — it’s free to get started.
         </p>
         <Link to={token ? "/workspaces" : "/auth/register"}>
-          <Button size="lg" className="px-10 py-6 text-lg">
+          <Button size="lg" className="px-10 py-6 text-lg cursor-pointer">
             {token ? "Go to Dashboard" : "Create Your Account"}
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
