@@ -48,10 +48,10 @@ const Header = () => {
                 <Folder size={18} /> Workspaces
               </Link>
               <Link
-                to="/chat/global"
+                to="/ai-chat"
                 className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-primary hover:text-primary-foreground"
               >
-                <MessageSquare size={18} /> Chat
+                <MessageSquare size={18} /> Chat  with AI
               </Link>
               <Link
                 to="/profile"
@@ -107,10 +107,10 @@ const Header = () => {
                       <Folder size={18} /> Workspaces
                     </Link>
                     <Link
-                      to="/chat/global"
+                      to="/ai-chat"
                       className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-primary hover:text-primary-foreground"
                     >
-                      <MessageSquare size={18} /> Chat
+                      <MessageSquare size={18} /> Chat with AI
                     </Link>              
                     <Link
                       to="/profile"
