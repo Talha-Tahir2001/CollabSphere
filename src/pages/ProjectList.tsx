@@ -59,7 +59,7 @@ export default function ProjectList() {
 
     setLoading(true);
     try {
-      const newProject = await createProject(workspaceId, { name, description });
+      await createProject(workspaceId, { name, description });
       
       toast.success("Project created!");
       setOpen(false);
