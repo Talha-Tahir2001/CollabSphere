@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getWorkspaces, createWorkspace } from "@/services/workspaceService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { FolderPlus } from "lucide-react";
+import { FolderPlus, ArrowRight } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { DynamicBreadcrumb } from "@/components/DynamicBreadcrumb";
 
 interface Workspace {
   _id: string;
@@ -15,11 +16,12 @@ interface Workspace {
   description?: string;
 }
 
-export default function WorkspacesPage() {
+export default function WorkspaceList() {
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const fetchWorkspaces = async () => {
     try {
@@ -31,21 +33,34 @@ export default function WorkspacesPage() {
   };
 
   const handleCreate = async () => {
-    if (!name.trim()) return toast.warning("Workspace name is required");
-    try {
-      await createWorkspace({ name, description });
+  if (!name.trim()) {
+    toast.warning("Workspace name is required");
+    return;
+  }
+
+  try {
+    // Your createWorkspace service should return the workspace object
+    const data = await createWorkspace({ name, description });
+    
+    // Check if we got a valid workspace back (has _id)
+    if (data && data._id) {
       toast.success("Workspace created!");
       setOpen(false);
       setName("");
       setDescription("");
-      fetchWorkspaces();
-    } catch (err: any) {
-      if (err instanceof Error) {
-        toast.error(err.message || "Failed to create workspace");
-      } else if (err.response) {
-        toast.error(err.response.data.message || "Failed to create workspace");
-      }
+      await fetchWorkspaces();
+    } else {
+      // If no _id, something went wrong
+      throw new Error("Failed to create workspace");
     }
+  } catch (err: any) {
+    console.error("Error creating workspace:", err);
+    toast.error(err.message || "Failed to create workspace");
+  }
+};
+
+  const handleWorkspaceClick = (workspaceId: string) => {
+    navigate(`/workspaces/${workspaceId}/projects`);
   };
 
   useEffect(() => {
@@ -54,6 +69,10 @@ export default function WorkspacesPage() {
 
   return (
     <div className="container mx-auto py-10">
+      {/* Breadcrumb */}
+      <DynamicBreadcrumb />
+
+      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Your Workspaces</h1>
         <Dialog open={open} onOpenChange={setOpen}>
@@ -83,14 +102,22 @@ export default function WorkspacesPage() {
         </Dialog>
       </div>
 
+      {/* Workspaces Grid */}
       {workspaces.length === 0 ? (
         <p className="text-muted-foreground">No workspaces found.</p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {workspaces.map((ws) => (
-            <Card key={ws._id} className="hover:shadow-lg transition">
+            <Card 
+              key={ws._id} 
+              className="hover:shadow-lg transition cursor-pointer group"
+              onClick={() => handleWorkspaceClick(ws._id)}
+            >
               <CardHeader>
-                <CardTitle>{ws.name}</CardTitle>
+                <CardTitle className="flex items-center justify-between">
+                  {ws.name}
+                  <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
