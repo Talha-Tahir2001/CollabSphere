@@ -33,13 +33,17 @@ export const getProjectsByWorkspace = async (workspaceId: string): Promise<Proje
   return response.json();
 };
 
+// File: src/services/projectService.ts
+// Add debug logs to your createProject function
+
 export const createProject = async (
   workspaceId: string, 
   data: CreateProjectData
 ): Promise<Project> => {
   const token = localStorage.getItem("token");
+  const url = `${API_URL}/workspaces/${workspaceId}/projects`;
   
-  const response = await fetch(`${API_URL}/workspaces/${workspaceId}/projects`, {
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -48,12 +52,18 @@ export const createProject = async (
     body: JSON.stringify(data),
   });
 
+
   if (!response.ok) {
+    console.log("❌ Response not OK, reading error...");
     const errorData = await response.json();
+    console.error("Error data:", errorData);
     throw new Error(errorData.message || "Failed to create project");
   }
 
-  return response.json();
+  console.log("✅ Response OK, parsing JSON...");
+  const result = await response.json();
+  console.log("Project created:", result);
+  return result;
 };
 
 export const getProjectById = async (
