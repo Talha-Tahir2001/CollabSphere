@@ -8,9 +8,9 @@ import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import WorkspaceList from "./pages/WorkspaceList";
 import Profile from "./pages/Profile";
-import TaskList from "./pages/TaskList";
 import Home from "./pages/Home";
 import ProjectList from "./pages/ProjectList";
+import TaskList from "./pages/TaskList";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -27,33 +27,43 @@ function App() {
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/login" element={<Login />} />
 
-          {/* 🔒 Protected Routes */}
+          {/* 🔒 Protected Routes - Hierarchical Structure */}
+          
+          {/* Workspaces Level */}
           <Route
             path="/workspaces"
             element={token ? <WorkspaceList /> : <Navigate to="/auth/login" />}
           />
+          
+          {/* Projects Level (within a workspace) */}
           <Route
-            path="/chat/:workspaceId"
-            element={token ? <Chat /> : <Navigate to="/auth/login" />}
-          />
-          <Route
-            path="/projects"
+            path="/workspaces/:workspaceId/projects"
             element={token ? <ProjectList /> : <Navigate to="/auth/login" />}
           />
+          
+          {/* Tasks Level (within a project) */}
+          <Route
+            path="/workspaces/:workspaceId/projects/:projectId/tasks"
+            element={token ? <TaskList /> : <Navigate to="/auth/login" />}
+          />
+          
+          {/* Chat for workspace */}
+          <Route
+            path="/workspaces/:workspaceId/chat"
+            element={token ? <Chat /> : <Navigate to="/auth/login" />}
+          />
+          
+          {/* Profile */}
           <Route
             path="/profile"
             element={token ? <Profile /> : <Navigate to="/auth/login" />}
-          />
-          <Route
-            path="/tasks"
-            element={token ? <TaskList /> : <Navigate to="/auth/login" />}
           />
 
           {/* 🌐 Catch-all redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      <Toaster />
+      <Toaster richColors />
     </ThemeProvider>
   );
 }
