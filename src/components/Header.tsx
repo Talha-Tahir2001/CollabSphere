@@ -53,18 +53,6 @@ const Header = () => {
               >
                 <MessageSquare size={18} /> Chat
               </Link>
-              {/* <Link
-                to="/projects"
-                className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                <FolderOpen size={18} /> Projects
-              </Link>
-              <Link
-                to="/tasks"
-                className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                <Clipboard size={18} /> Tasks
-              </Link> */}
               <Link
                 to="/profile"
                 className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-primary hover:text-primary-foreground"
@@ -123,19 +111,7 @@ const Header = () => {
                       className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-primary hover:text-primary-foreground"
                     >
                       <MessageSquare size={18} /> Chat
-                    </Link>
-                    {/* <Link
-                      to="/projects"
-                      className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-primary hover:text-primary-foreground"
-                    >
-                      <FolderOpen size={18} /> Projects
-                    </Link>
-                    <Link
-                      to="/tasks"
-                      className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-primary hover:text-primary-foreground"
-                    >
-                      <Clipboard size={18} /> Tasks
-                    </Link> */}
+                    </Link>              
                     <Link
                       to="/profile"
                       className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-primary hover:text-primary-foreground"
