@@ -33,9 +33,6 @@ export const getProjectsByWorkspace = async (workspaceId: string): Promise<Proje
   return response.json();
 };
 
-// File: src/services/projectService.ts
-// Add debug logs to your createProject function
-
 export const createProject = async (
   workspaceId: string, 
   data: CreateProjectData
@@ -62,7 +59,7 @@ export const createProject = async (
 
   console.log("✅ Response OK, parsing JSON...");
   const result = await response.json();
-  console.log("Project created:", result);
+  // console.log("Project created:", result);
   return result;
 };
 
