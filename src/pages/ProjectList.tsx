@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProjectsByWorkspace, createProject, type Project } from "@/services/projectService";
+import { getProjectsByWorkspace, type Project } from "@/services/projectService";
 import { getWorkspaces } from "@/services/workspaceService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,7 +59,7 @@ export default function ProjectList() {
 
     setLoading(true);
     try {
-      const newProject = await createProject(workspaceId, { name, description });
+      // const newProject = await createProject(workspaceId, { name, description });
       
       toast.success("Project created!");
       setOpen(false);
