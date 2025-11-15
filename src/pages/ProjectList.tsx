@@ -1,14 +1,30 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { createProject, getProjectsByWorkspace, type Project } from "@/services/projectService";
+import {
+  createProject,
+  getProjectsByWorkspace,
+  type Project,
+} from "@/services/projectService";
 import { getWorkspaces } from "@/services/workspaceService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { FolderPlus, ArrowRight, Loader2 } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { FolderPlus, ArrowRight, Loader2, MessageSquare } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { DynamicBreadcrumb } from "@/components/DynamicBreadcrumb";
 
 export default function ProjectList() {
@@ -29,8 +45,8 @@ export default function ProjectList() {
     try {
       // Fetch workspace details to get the name
       const workspaces = await getWorkspaces();
-      const currentWorkspace = workspaces.find(ws => ws._id === workspaceId);
-      
+      const currentWorkspace = workspaces.find((ws) => ws._id === workspaceId);
+
       if (currentWorkspace) {
         setWorkspaceName(currentWorkspace.name);
       }
@@ -60,12 +76,12 @@ export default function ProjectList() {
     setLoading(true);
     try {
       await createProject(workspaceId, { name, description });
-      
+
       toast.success("Project created!");
       setOpen(false);
       setName("");
       setDescription("");
-      
+
       // Refresh projects list
       await fetchWorkspaceAndProjects();
     } catch (error: any) {
@@ -105,52 +121,71 @@ export default function ProjectList() {
           <h1 className="text-2xl font-bold">{workspaceName}</h1>
           <p className="text-muted-foreground">Projects in this workspace</p>
         </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button className="flex items-center gap-2 cursor-pointer">
-              <FolderPlus size={18} /> New Project
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create New Project</DialogTitle>
-            </DialogHeader>
-            <div className="flex flex-col gap-4">
-              <Input
-                placeholder="Project Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                disabled={loading}
-              />
-              <Textarea
-                placeholder="Description (optional)"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                disabled={loading}
-              />
-              <Button className="cursor-pointer" onClick={handleCreateProject} disabled={loading}>
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Creating...
-                  </>
-                ) : (
-                  "Create"
-                )}
+        <div className="flex gap-2">
+          {/* Chat Button */}
+          <Button
+            variant="outline"
+            onClick={() => navigate(`/workspaces/${workspaceId}/chat`)}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <MessageSquare size={18} />
+            <span className="hidden sm:inline">Chat</span>
+          </Button>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button className="flex items-center gap-2 cursor-pointer">
+                <FolderPlus size={18} /> New Project
               </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create New Project</DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col gap-4">
+                <Input
+                  placeholder="Project Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  disabled={loading}
+                />
+                <Textarea
+                  placeholder="Description (optional)"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  disabled={loading}
+                />
+                <Button
+                  className="cursor-pointer"
+                  onClick={handleCreateProject}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Creating...
+                    </>
+                  ) : (
+                    "Create"
+                  )}
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
 
-      {/* Projects Grid */}
+        {/* Projects Grid */}
+      </div>
       {projects.length === 0 ? (
         <Card className="p-12 text-center">
           <CardContent>
             <p className="text-muted-foreground mb-4">
               No projects found. Create your first project!
             </p>
-            <Button className="cursor-pointer" onClick={() => setOpen(true)} variant="outline">
+            <Button
+              className="cursor-pointer"
+              onClick={() => setOpen(true)}
+              variant="outline"
+            >
               <FolderPlus size={18} className="mr-2" />
               Create Project
             </Button>
