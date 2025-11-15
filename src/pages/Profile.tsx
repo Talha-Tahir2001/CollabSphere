@@ -26,6 +26,7 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
+      setLoading(true);
       const res = await API.get("/profile");
       setUser(res.data);
       setUsername(res.data.username);
@@ -34,6 +35,7 @@ const Profile = () => {
     } catch (err) {
       toast.error("Failed to load profile");
       console.error(err);
+      setLoading(false);
     }
   };
 
