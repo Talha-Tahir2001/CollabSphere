@@ -12,8 +12,9 @@ import Home from "./pages/Home";
 import ProjectList from "./pages/ProjectList";
 import TaskList from "./pages/TaskList";
 
-import { AuthProvider } from "./contexts/authContext";
+
 import { useAuth } from "./hooks/useAuth";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const auth = useAuth();
