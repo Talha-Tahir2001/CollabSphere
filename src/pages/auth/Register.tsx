@@ -7,14 +7,17 @@ import { Button } from "@/components/ui/button";
 import API from "@/lib/axiosInstance";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<"Admin" | "Member">("Member");
 
   const handleRegister = async (e: React.FormEvent) => {
+    
     e.preventDefault();
     try {
       const res = await API.post("/auth/register", { username, email, password, role });
@@ -23,7 +26,7 @@ export default function Register() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       toast.success("Registration successful! Please log in.");
-      window.location.href = "/login";
+      navigate("/auth/login");
     } catch (err) {
       console.error(err);
     }
