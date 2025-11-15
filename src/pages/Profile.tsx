@@ -25,8 +25,8 @@ const Profile = () => {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
   const fetchProfile = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const res = await API.get("/profile");
       setUser(res.data);
       setUsername(res.data.username);
@@ -35,6 +35,7 @@ const Profile = () => {
     } catch (err) {
       toast.error("Failed to load profile");
       console.error(err);
+    } finally {
       setLoading(false);
     }
   };
